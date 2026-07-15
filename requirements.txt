@@ -20,4 +20,3 @@ datetime
 discord.py
 typing
 zlapi
-anhmess
