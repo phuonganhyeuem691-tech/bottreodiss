@@ -8064,3 +8064,16 @@ async def menu(interaction: discord.Interaction):
 bot.run(TOKEN)
 
 COLORS = {'vang': ''}
+import threading
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+
+def run_dummy_server():
+    # Tạo cổng mạng ảo để tránh lỗi "No open ports detected" trên Render
+    port = int(os.getenv("PORT", 8080))
+    server_address = ("", port)
+    httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
+    print(f"[Render] Đang mở cổng mạng ảo tại port: {port}")
+    httpd.serve_forever()
+
+# Chèn lệnh này vào ngay TRƯỚC dòng chạy bot của bạn (ví dụ bot.run)
+threading.Thread(target=run_dummy_server, daemon=True).start()
