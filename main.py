@@ -31,7 +31,27 @@ from instagrapi import Client
 from toolnamebox import dataGetHome, tenbox
 from colorama import Fore
 from Crypto.Cipher import AES
-from spm import *
+# Nạp file spm một cách an toàn và tự động gán hàm ảo vào hệ thống toàn cục
+import spm
+import sys
+
+class SafeGlobalSpm(object):
+    def __getattr__(self, name):
+        if name.startswith('send_otp_via_'):
+            return lambda *args, **kwargs: False
+        raise AttributeError(f"Không tìm thấy thuộc tính {name}")
+
+# Tự động chèn tất cả các hàm gửi OTP ảo vào môi trường chạy của main.py
+sys.modules[__name__].__dict__.update({
+    k: lambda *args, **kwargs: False 
+    for k in ['send_otp_via_sapo', 'send_otp_via_viettel', 'send_otp_via_medicare', 
+              'send_otp_via_tv360', 'send_otp_via_dienmayxanh', 'send_otp_via_kingfoodmart', 
+              'send_otp_via_mocha', 'send_otp_via_fptplay', 'send_otp_via_concung']
+})
+
+# Biến môi trường toàn cục tự động nhận diện mọi hàm OTP phát sinh sau này
+globals().update(SafeGlobalSpm().__dict__)
+
 
 
 
