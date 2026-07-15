@@ -12,7 +12,7 @@ pyfiglet
 attrs
 attr
 colorama
-instagraapi
+instagrapi
 beautifulsoup4
 python-dotenv
 ab5
