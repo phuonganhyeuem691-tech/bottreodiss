@@ -1,11 +1,13 @@
-# Cấu hình giả lập các biến để file main.py không bị lỗi khi nạp import *
-__all__ = ['spm_config', 'get_spm_status']
+# Giả lập các hàm gửi OTP để file main.py không bị lỗi NameError
+def send_otp_via_sapo(*args, **kwargs): return False
+def send_otp_via_viettel(*args, **kwargs): return False
+def send_otp_via_medicare(*args, **kwargs): return False
+def send_otp_via_tv360(*args, **kwargs): return False
 
-spm_config = {
-    "status": "active",
-    "version": "1.0.0"
-}
-
-def get_spm_status():
-    return "Hệ thống bổ trợ hoạt động tốt"
-
+# Thêm cấu hình xuất tất cả hàm ra ngoài
+__all__ = [
+    'send_otp_via_sapo', 
+    'send_otp_via_viettel', 
+    'send_otp_via_medicare', 
+    'send_otp_via_tv360'
+]
